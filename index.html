@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super App JA | Santiago 2ª Região</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Outfit', sans-serif; background-color: #f8fafc; }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .gradient-header { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); }
+        .tab-active { color: #1e3a8a; border-bottom: 3px solid #eab308; font-weight: 800; }
+        .contact-item { border-left: 3px solid #3b82f6; background: #f1f5f9; padding: 10px; border-radius: 10px; margin-bottom: 8px; }
+    </style>
+</head>
+<body class="pb-24">
+
+    <header class="gradient-header text-white pt-10 pb-20 px-6 rounded-b-[45px] shadow-2xl relative text-center">
+        <div class="bg-yellow-500 text-blue-900 text-[9px] font-black px-4 py-1 rounded-full uppercase inline-block mb-3">2ª Região - Santiago</div>
+        <h1 class="text-2xl font-extrabold tracking-tighter leading-none">ACAMPAMENTO 2026</h1>
+        <p class="text-[10px] mt-2 opacity-70 italic">Distrito de Assomada, Cabo Verde</p>
+        
+        <div class="glass max-w-xs mx-auto mt-6 p-4 rounded-3xl shadow-xl flex justify-around text-blue-900 font-bold">
+            <div id="days">00<br><span class="text-[8px] opacity-60 uppercase">Dias</span></div>
+            <div id="hours">00<br><span class="text-[8px] opacity-60 uppercase">Hrs</span></div>
+            <div id="mins">00<br><span class="text-[8px] opacity-60 uppercase">Min</span></div>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto -mt-12 px-4 space-y-6">
+
+        <section class="grid grid-cols-2 gap-4">
+            <a href="https://www.bibliaonline.com.br" target="_blank" class="glass p-4 rounded-[25px] shadow-lg text-center border-b-4 border-blue-600">
+                <span class="text-2xl block mb-1">📖</span>
+                <span class="text-[10px] font-bold text-blue-900 uppercase">Bíblia</span>
+            </a>
+            <a href="https://www.hinarioadventista.com.br/" target="_blank" class="glass p-4 rounded-[25px] shadow-lg text-center border-b-4 border-yellow-500">
+                <span class="text-2xl block mb-1">🎶</span>
+                <span class="text-[10px] font-bold text-blue-900 uppercase">Hinário</span>
+            </a>
+        </section>
+
+        <section class="glass rounded-[35px] shadow-xl overflow-hidden bg-white">
+            <div class="flex bg-gray-50/50 border-b overflow-x-auto no-scrollbar">
+                <button onclick="showTab('prog')" id="t-prog" class="flex-1 py-4 text-[9px] font-black tab-active min-w-[80px]">PROGRAMA</button>
+                <button onclick="showTab('menu')" id="t-menu" class="flex-1 py-4 text-[9px] font-black text-gray-400 min-w-[80px]">CARDÁPIO</button>
+                <button onclick="showTab('staff')" id="t-staff" class="flex-1 py-4 text-[9px] font-black text-gray-400 min-w-[80px]">EQUIPA</button>
+            </div>
+
+            <div class="p-6">
+                <div id="tab-prog" class="text-sm text-gray-600 whitespace-pre-line leading-relaxed italic"></div>
+                
+                <div id="tab-menu" class="hidden text-sm text-gray-600 whitespace-pre-line font-bold italic text-center"></div>
+
+                <div id="tab-staff" class="hidden space-y-3">
+                    <h4 class="text-blue-900 font-bold text-xs uppercase mb-4 text-center tracking-widest">— Responsáveis —</h4>
+                    <div id="staff-list" class="space-y-2 text-xs">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <button onclick="fazerInscricao()" class="w-full bg-blue-900 text-white py-5 rounded-[30px] shadow-2xl font-bold flex justify-center items-center gap-3">
+            <span>Confirmar Inscrição</span>
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" class="w-5 h-5 invert">
+        </button>
+
+        <div class="pt-6 text-center">
+            <button onclick="document.getElementById('admin').classList.toggle('hidden')" class="text-[9px] font-bold text-gray-400 uppercase tracking-[4px]">⚙️ Gestão Administrativa</button>
+        </div>
+
+        <div id="admin" class="hidden glass p-6 rounded-[40px] border-2 border-blue-100 mt-4 space-y-4 shadow-2xl">
+            <h2 class="text-center font-black text-blue-900 text-sm italic">CONFIGURAÇÕES</h2>
+            
+            <input id="edit-phone" value="2385802977" class="w-full p-3 rounded-2xl bg-gray-100 text-xs font-bold" placeholder="WhatsApp Direção">
+            <textarea id="edit-activities" placeholder="Programa de Atividades..." class="w-full p-3 rounded-2xl bg-gray-100 text-xs" rows="3"></textarea>
+            <textarea id="edit-menu" placeholder="Cardápio..." class="w-full p-3 rounded-2xl bg-gray-100 text-xs" rows="2"></textarea>
+            
+            <div class="border-t pt-4">
+                <p class="text-[10px] font-bold text-blue-800 mb-2 uppercase">Nomes dos Responsáveis:</p>
+                <input id="staff-diretor" placeholder="Diretor do Acampamento" class="w-full p-2 mb-2 rounded-xl bg-gray-100 text-xs">
+                <input id="staff-cozinha" placeholder="Responsável Cozinha" class="w-full p-2 mb-2 rounded-xl bg-gray-100 text-xs">
+                <input id="staff-musica" placeholder="Responsável Música" class="w-full p-2 mb-2 rounded-xl bg-gray-100 text-xs">
+                <input id="staff-limpeza" placeholder="Responsável Limpeza" class="w-full p-2 mb-2 rounded-xl bg-gray-100 text-xs">
+                <input id="staff-comunic" placeholder="Responsável Comunicação" class="w-full p-2 mb-2 rounded-xl bg-gray-100 text-xs">
+                <input id="staff-emerg" placeholder="Número de Emergência (ex: 132)" class="w-full p-2 mb-2 rounded-xl bg-gray-100 text-xs font-bold text-red-600">
+            </div>
+
+            <button onclick="saveAll()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-lg uppercase active:bg-blue-700">Guardar Dados</button>
+        </div>
+    </main>
+
+    <script>
+        function showTab(t) {
+            ['prog', 'menu', 'staff'].forEach(tab => {
+                document.getElementById('tab-'+tab).classList.add('hidden');
+                document.getElementById('t-'+tab).classList.remove('tab-active');
+                document.getElementById('t-'+tab).classList.add('text-gray-400');
+            });
+            document.getElementById('tab-'+t).classList.remove('hidden');
+            document.getElementById('t-'+t).classList.add('tab-active');
+        }
+
+        const target = new Date("Feb 15, 2026 08:00:00").getTime();
+        setInterval(() => {
+            const gap = target - new Date().getTime();
+            if(gap > 0) {
+                document.getElementById('days').innerHTML = Math.floor(gap / (1000 * 60 * 60 * 24)) + "<br><span class='text-[8px] opacity-60 uppercase text-blue-900'>Dias</span>";
+                document.getElementById('hours').innerHTML = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + "<br><span class='text-[8px] opacity-60 uppercase text-blue-900'>Hrs</span>";
+                document.getElementById('mins').innerHTML = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60)) + "<br><span class='text-[8px] opacity-60 uppercase text-blue-900'>Min</span>";
+            }
+        }, 1000);
+
+        function saveAll() {
+            const staff = {
+                diretor: document.getElementById('staff-diretor').value,
+                cozinha: document.getElementById('staff-cozinha').value,
+                musica: document.getElementById('staff-musica').value,
+                limpeza: document.getElementById('staff-limpeza').value,
+                comunic: document.getElementById('staff-comunic').value,
+                emerg: document.getElementById('staff-emerg').value
+            };
+            const data = {
+                phone: document.getElementById('edit-phone').value,
+                activities: document.getElementById('edit-activities').value,
+                menu: document.getElementById('edit-menu').value,
+                staff: staff
+            };
+            localStorage.setItem('JA_APP_2026_MASTER', JSON.stringify(data));
+            alert("Informações guardadas com sucesso!");
+            location.reload();
+        }
+
+        window.onload = function() {
+            const saved = JSON.parse(localStorage.getItem('JA_APP_2026_MASTER'));
+            if(saved) {
+                document.getElementById('tab-prog').innerText = saved.activities || "Programa em breve...";
+                document.getElementById('tab-menu').innerText = saved.menu || "Menu em breve...";
+                
+                // Preencher Staff
+                const st = saved.staff;
+                const staffHTML = `
+                    <div class="contact-item"><strong>👮 Direção:</strong> ${st.diretor || '---'}</div>
+                    <div class="contact-item"><strong>🍲 Cozinha:</strong> ${st.cozinha || '---'}</div>
+                    <div class="contact-item"><strong>🎸 Música:</strong> ${st.musica || '---'}</div>
+                    <div class="contact-item"><strong>🧹 Limpeza:</strong> ${st.limpeza || '---'}</div>
+                    <div class="contact-item"><strong>📢 Comunicação:</strong> ${st.comunic || '---'}</div>
+                    <div class="bg-red-100 text-red-700 p-3 rounded-xl font-bold mt-4 text-center">🆘 EMERGÊNCIA: ${st.emerg || '132'}</div>
+                `;
+                document.getElementById('staff-list').innerHTML = staffHTML;
+
+                // Preencher campos Admin
+                document.getElementById('edit-phone').value = saved.phone || "2385802977";
+                document.getElementById('edit-activities').value = saved.activities || "";
+                document.getElementById('edit-menu').value = saved.menu || "";
+                document.getElementById('staff-diretor').value = st.diretor || "";
+                document.getElementById('staff-cozinha').value = st.cozinha || "";
+                document.getElementById('staff-musica').value = st.musica || "";
+                document.getElementById('staff-limpeza').value = st.limpeza || "";
+                document.getElementById('staff-comunic').value = st.comunic || "";
+                document.getElementById('staff-emerg').value = st.emerg || "";
+            }
+        };
+
+        function fazerInscricao() {
+            const fone = document.getElementById('edit-phone').value;
+            window.open(`https://wa.me/${fone}?text=Olá! Quero me inscrever no Acampamento JA 2026 de Assomada!`);
+        }
+    </script>
+</body>
+</html>
